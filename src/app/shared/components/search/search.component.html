@@ -1,0 +1,12 @@
+<app-search-filter
+  [filters]="searhFilters"
+  (onClickFilter)="onClickFilter($event)"
+></app-search-filter>
+<app-dynamic-table
+  [loading]="loading"
+  [columns]="columns"
+  (onChangePagination)="onChangePagination($event)"
+  [items]="items"
+  (onClickItem)="onClickItem($event)"
+  [totalItens]="totalItens"
+></app-dynamic-table>

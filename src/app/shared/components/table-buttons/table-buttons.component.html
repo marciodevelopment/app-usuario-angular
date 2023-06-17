@@ -1,0 +1,33 @@
+<button
+  *ngIf="showSelectButton"
+  type="button"
+  class="p-button-rounded p-button-success mr-1"
+  pButton
+  pRipple
+  icon="pi pi-check"
+  pTooltip="Selecionar Item"
+  tooltipPosition="top"
+  (click)="onClickSelectItem()"
+></button>
+<button
+  class="p-button-rounded p-button-warning mr-1"
+  *ngIf="showEditButton"
+  type="button"
+  pButton
+  pRipple
+  icon="pi pi-file-edit"
+  pTooltip="Editar Item"
+  tooltipPosition="top"
+  (click)="onClickEditItem()"
+></button>
+<button
+  *ngIf="showDeleteButton"
+  type="button"
+  class="p-button-rounded p-button-danger"
+  pButton
+  pRipple
+  icon="pi pi-trash"
+  pTooltip="Deletar Item"
+  tooltipPosition="top"
+  (click)="onClickDeleteItem()"
+></button>
