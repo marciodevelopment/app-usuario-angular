@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { SearchFieldConfiguration } from '../../models/SearchFieldConfiguration';
 import { SearchConfiguration } from '../../models/SearchConfiguration';
 import { DynamicFilter } from '../../models/DynamicFilter';
@@ -9,6 +16,8 @@ import { TablePagination } from '../../models/TablePagination';
 import { Table } from 'primeng/table';
 import { SearchQueryParams } from '../../models/SearchQueryParams';
 import { SearchItem } from '../../models/SearchItem';
+import { PageResponse } from '../../interfaces/PageResponse';
+import { ActionDynamicTable } from '../../models/ActionDynamicTable';
 
 @Component({
   selector: 'app-search',
@@ -18,13 +27,28 @@ import { SearchItem } from '../../models/SearchItem';
 export class SearchComponent implements OnInit {
   @Input()
   public searchConfiguration!: SearchConfiguration;
+  @Output()
+  public onSearch = new EventEmitter<SearchQueryParams>();
+  @Output()
+  public onSelectItem = new EventEmitter<any>();
+  @Output()
+  public onDeleteItem = new EventEmitter<any>();
+  @Output()
+  public onEditItem = new EventEmitter<any>();
+
   public searhFilters: Array<DynamicFilter> = [];
   public columns: Array<DynamicColum> = [];
-  public loading = false;
+  public loading = true;
   public items: any[] = [];
   public totalItens: number = 0;
   public pagination!: TablePagination;
   public filters: Array<DynamicFilter> = [];
+
+  constructor(private ref: ChangeDetectorRef) {}
+
+  ngAfterContentChecked() {
+    this.ref.detectChanges();
+  }
 
   ngOnInit(): void {
     const searchFieldConfiguration =
@@ -54,20 +78,38 @@ export class SearchComponent implements OnInit {
   }
 
   private search(): void {
+    if (!this.pagination) {
+      return;
+    }
+    this.loading = true;
     const queryParams = new SearchQueryParams(
       this.pagination,
       this.filters
         .filter((filter) => filter.value !== '')
-        .map((filter) => new SearchItem(filter.name, filter.value as string))
+        .map((filter) => new SearchItem(filter.field, filter.value as string))
     );
-    this.loading = true;
-    this.searchConfiguration.searchFunction(queryParams).subscribe({
-      next: (response) => (this.items = response.content),
-      complete: () => (this.loading = false),
-    });
+
+    this.onSearch.emit(queryParams);
   }
 
-  public onClickItem(event: ItemSelectedDynamicTableAction) {
-    console.log('item selected', event);
+  @Input()
+  public set pageResponse(pageResponse: PageResponse<any>) {
+    this.loading = false;
+    if (pageResponse) {
+      this.items = pageResponse.content;
+      this.totalItens = pageResponse.totalElements;
+    }
+  }
+
+  onClickSelectItem(itemSelected: any) {
+    this.onSelectItem.emit(itemSelected);
+  }
+
+  onClickEditItem(itemSelected: any) {
+    this.onEditItem.emit(itemSelected);
+  }
+
+  onClickDeleteItem(itemSelected: any): void {
+    this.onDeleteItem.emit(itemSelected);
   }
 }

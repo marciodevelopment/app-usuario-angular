@@ -1,4 +1,5 @@
-<!--
-<app-search [searchConfiguration]="searchConfiguration"></app-search>
--->
-<button value="Pesquisar" (click)="pesquisar()"></button>
+<app-search
+  [searchConfiguration]="searchConfiguration"
+  (onSearch)="onSearch($event)"
+  [pageResponse]="pageResponse"
+></app-search>

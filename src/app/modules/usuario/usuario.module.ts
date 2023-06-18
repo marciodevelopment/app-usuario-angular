@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { USUARIO_ROUTES } from './usuario.routing';
 import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { UsuarioService } from './services/usuario.service';
 @NgModule({
   declarations: [UsuarioPesquisaComponent],
   imports: [
@@ -14,5 +15,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     RouterModule.forChild(USUARIO_ROUTES),
     SharedModule,
   ],
+  exports: [],
 })
 export class UsuarioModule {}

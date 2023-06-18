@@ -1,3 +1,4 @@
+import { query } from '@angular/animations';
 import { SearchItem } from './SearchItem';
 
 export class TablePagination {
@@ -20,5 +21,13 @@ export class TablePagination {
       searchItems.push(new SearchItem('direction', this.direction));
     }
     return searchItems;
+  }
+
+  getQueryString(): string {
+    let queryString = `page=${this.page}&size=${this.size}`;
+    if (this.sortField) {
+      queryString += `&sortField=${this.sortField}&direction=${this.direction}`;
+    }
+    return queryString;
   }
 }

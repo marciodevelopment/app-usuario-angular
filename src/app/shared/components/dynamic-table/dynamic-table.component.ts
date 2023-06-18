@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
 import { ActionDynamicTable } from '../../models/ActionDynamicTable';
 import { ItemSelectedDynamicTableAction } from '../../models/ItemSelectedDynamicTableAction';
@@ -17,7 +23,12 @@ export class DynamicTableComponent {
   @Input()
   public columns: Array<DynamicColum> = [];
   @Output()
-  public onClickItem = new EventEmitter<ItemSelectedDynamicTableAction>();
+  public onSelectItem = new EventEmitter<ItemSelectedDynamicTableAction>();
+  @Output()
+  public onDeleteItem = new EventEmitter<ItemSelectedDynamicTableAction>();
+  @Output()
+  public onEditItem = new EventEmitter<ItemSelectedDynamicTableAction>();
+
   @Output()
   public onChangePagination = new EventEmitter<TablePagination>();
   @Input()
@@ -28,22 +39,16 @@ export class DynamicTableComponent {
   public showEditButton = true;
   public itemSelected: any;
 
-  onSelectItem(itemSelected: any) {
-    this.onReturnItemSelected(itemSelected, ActionDynamicTable.SELECT);
+  onClickSelectItem(itemSelected: any) {
+    this.onSelectItem.emit(itemSelected);
   }
 
-  onEditItem(itemSelected: any) {
-    this.onReturnItemSelected(itemSelected, ActionDynamicTable.EDIT);
+  onClickEditItem(itemSelected: any) {
+    this.onEditItem.emit(itemSelected);
   }
 
-  onDeleteItem(itemSelected: any): void {
-    this.onReturnItemSelected(itemSelected, ActionDynamicTable.EDIT);
-  }
-
-  private onReturnItemSelected(itemSelected: any, action: ActionDynamicTable) {
-    this.onClickItem.emit(
-      new ItemSelectedDynamicTableAction(itemSelected, action)
-    );
+  onClickDeleteItem(itemSelected: any): void {
+    this.onDeleteItem.emit(itemSelected);
   }
 
   loadData(event: LazyLoadEvent) {
@@ -51,10 +56,12 @@ export class DynamicTableComponent {
     let size: number = 10;
     let direction: string = '';
     let sortField: string = '';
+
     if (event.first && event.rows) {
       page = event.first / event.rows;
-      size = event.rows;
+      page += 1;
     }
+    if (event.rows) size = event.rows;
     if (event.sortField) {
       sortField = event.sortField;
       direction = event.sortOrder == -1 ? 'desc' : 'asc';
@@ -63,6 +70,4 @@ export class DynamicTableComponent {
       new TablePagination(page, size, sortField, direction)
     );
   }
-
-  ngOnInit() {}
 }

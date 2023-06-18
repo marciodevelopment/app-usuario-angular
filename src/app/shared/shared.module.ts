@@ -12,7 +12,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableButtonsComponent } from './components/table-buttons/table-buttons.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { HttpServiceService } from './services/http-service.service';
+import { HttpService } from './services/http.service';
 
 @NgModule({
   declarations: [

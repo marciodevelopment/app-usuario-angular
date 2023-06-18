@@ -5,7 +5,7 @@ import { DynamicFilter } from '../../models/DynamicFilter';
   selector: 'app-search-filter',
   templateUrl: './search-filter.component.html',
 })
-export class SearchFilterComponent implements OnInit {
+export class SearchFilterComponent {
   @Input()
   public filters: Array<DynamicFilter> = [];
   @Output()
@@ -15,9 +15,5 @@ export class SearchFilterComponent implements OnInit {
     this.onClickFilter.emit(
       this.filters.filter((filter) => filter.value !== undefined)
     );
-  }
-
-  ngOnInit(): void {
-    this.onClickSearch();
   }
 }

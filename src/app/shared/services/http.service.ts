@@ -12,7 +12,7 @@ import { UsuarioPesquisaResponse } from 'src/app/modules/usuario/interfaces/resp
 @Injectable({
   providedIn: 'root',
 })
-export class HttpServiceService {
+export class HttpService {
   private BASE_URL = 'http://localhost:8080/';
   private httpOptions = {
     headers: new HttpHeaders({

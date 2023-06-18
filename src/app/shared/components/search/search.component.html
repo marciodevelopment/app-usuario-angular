@@ -7,6 +7,8 @@
   [columns]="columns"
   (onChangePagination)="onChangePagination($event)"
   [items]="items"
-  (onClickItem)="onClickItem($event)"
+  (onDeleteItem)="onClickDeleteItem($event)"
+  (onEditItem)="onClickEditItem($event)"
+  (onSelectItem)="onClickSelectItem($event)"
   [totalItens]="totalItens"
 ></app-dynamic-table>
