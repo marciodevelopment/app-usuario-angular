@@ -28,4 +28,8 @@ export class UsuarioService {
       }
     );
   }
+
+  delete(cdUsuario: number): Observable<Object> {
+    return this.httpService.delete(this.SERVICE_URL, cdUsuario);
+  }
 }

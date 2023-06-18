@@ -18,6 +18,7 @@ import { SearchQueryParams } from '../../models/SearchQueryParams';
 import { SearchItem } from '../../models/SearchItem';
 import { PageResponse } from '../../interfaces/PageResponse';
 import { ActionDynamicTable } from '../../models/ActionDynamicTable';
+import { SearchDeleteAction } from '../../interfaces/SearchDeleteAction';
 
 @Component({
   selector: 'app-search',
@@ -110,6 +111,14 @@ export class SearchComponent implements OnInit {
   }
 
   onClickDeleteItem(itemSelected: any): void {
-    this.onDeleteItem.emit(itemSelected);
+    this.loading = true;
+    const deleteAction: SearchDeleteAction = {
+      itemDelete: itemSelected,
+      onDeleteComplete: () => {
+        console.log('retornou do delete');
+        this.search();
+      },
+    };
+    this.onDeleteItem.emit(deleteAction);
   }
 }

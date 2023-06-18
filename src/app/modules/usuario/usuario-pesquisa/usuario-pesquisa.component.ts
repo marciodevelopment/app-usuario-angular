@@ -7,6 +7,9 @@ import { Observable, filter } from 'rxjs';
 import { SearchQueryParams } from 'src/app/shared/models/SearchQueryParams';
 import { PageResponse } from 'src/app/shared/interfaces/PageResponse';
 import { UsuarioPesquisaResponse } from '../interfaces/response/UsuarioPesquisaResponse';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { SearchDeleteAction } from 'src/app/shared/interfaces/SearchDeleteAction';
+import { BaseSearchComponent } from './BaseSearchComponent';
 
 @Component({
   selector: 'app-usuario-pesquisa',
@@ -15,10 +18,12 @@ import { UsuarioPesquisaResponse } from '../interfaces/response/UsuarioPesquisaR
 })
 export class UsuarioPesquisaComponent implements OnInit {
   public pageResponse!: PageResponse<UsuarioPesquisaResponse>;
-
   public searchConfiguration!: SearchConfiguration;
 
-  constructor(public usuarioService: UsuarioService) {}
+  constructor(
+    public usuarioService: UsuarioService,
+    public toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.searchConfiguration = new SearchConfiguration(
@@ -27,8 +32,13 @@ export class UsuarioPesquisaComponent implements OnInit {
     );
   }
 
-  public delete(usuario: UsuarioPesquisaResponse) {
-    console.log('delete', usuario);
+  public onDeleteItem(deleteAction: SearchDeleteAction) {
+    this.usuarioService.delete(deleteAction.itemDelete.cdUsuario).subscribe({
+      next: () => {
+        this.toastService.toastDeleteItem('Usuário');
+        deleteAction.onDeleteComplete();
+      },
+    });
   }
 
   getSearchFieldsConfiguration(): Array<SearchFieldConfiguration> {

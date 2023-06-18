@@ -34,4 +34,11 @@ export class HttpService {
       params: options?.params,
     });
   }
+
+  delete(url: string, id: number): Observable<Object> {
+    return this.http.delete(
+      `${this.BASE_URL.concat(url)}/${id}`,
+      this.httpOptions
+    );
+  }
 }

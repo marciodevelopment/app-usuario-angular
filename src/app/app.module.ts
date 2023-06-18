@@ -8,9 +8,10 @@ import { HomeComponent } from './modules/home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -24,8 +25,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ConfirmDialogModule,
     BrowserAnimationsModule,
     ConfirmDialogModule,
+    ToastModule,
   ],
   bootstrap: [AppComponent],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
 })
 export class AppModule {}

@@ -15,14 +15,14 @@ export class ConfirmDialogService {
    * @param accpet
    * @param reject
    */
-  public deleteConfirmation(accpet: Function, reject?: Function): void {
+  public deleteConfirmation(accept: Function, reject?: Function): void {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja deletar este item ?',
       header: 'Confirmação de exclusão',
       icon: 'pi pi-info-circle',
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
-      accept: accpet,
+      accept: accept,
       reject: reject,
     });
   }
