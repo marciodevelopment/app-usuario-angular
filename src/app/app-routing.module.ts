@@ -12,6 +12,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/usuario/usuario.module').then((m) => m.UsuarioModule),
   },
+  {
+    path: 'endereco',
+    loadChildren: () =>
+      import('./modules/endereco/endereco.module').then(
+        (m) => m.EnderecoModule
+      ),
+  },
 ];
 
 @NgModule({

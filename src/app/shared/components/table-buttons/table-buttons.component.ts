@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmDialogService } from '../../services/confirm-dialog.service';
+import { TableButtomType } from '../../enums/TableButtomType';
 
 @Component({
   selector: 'app-table-buttons',
@@ -13,6 +14,8 @@ export class TableButtonsComponent implements OnInit {
 
   @Input()
   public item: any;
+  @Input()
+  public showButtons: TableButtomType[] = [];
 
   @Output()
   public onSelectItem = new EventEmitter<any>();
@@ -24,9 +27,15 @@ export class TableButtonsComponent implements OnInit {
   constructor(private confirmDialogService: ConfirmDialogService) {}
 
   ngOnInit(): void {
-    this.showEditButton = this.onEditItem.observed;
-    this.showSelectButton = this.onSelectItem.observed;
-    this.showDeleteButton = this.onDeleteItem.observed;
+    this.showEditButton =
+      this.onEditItem.observed &&
+      this.showButtons.indexOf(TableButtomType.EDIT) >= 0;
+    this.showSelectButton =
+      this.onSelectItem.observed &&
+      this.showButtons.indexOf(TableButtomType.SELECT) >= 0;
+    this.showDeleteButton =
+      this.onDeleteItem.observed &&
+      this.showButtons.indexOf(TableButtomType.DELETE) >= 0;
   }
 
   onClickSelectItem() {

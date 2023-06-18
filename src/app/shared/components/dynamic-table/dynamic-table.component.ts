@@ -10,6 +10,7 @@ import { ActionDynamicTable } from '../../models/ActionDynamicTable';
 import { ItemSelectedDynamicTableAction } from '../../models/ItemSelectedDynamicTableAction';
 import { DynamicColum } from '../../models/DynamicColumn';
 import { TablePagination } from '../../models/TablePagination';
+import { TableButtomType } from '../../enums/TableButtomType';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -33,6 +34,8 @@ export class DynamicTableComponent {
   public onChangePagination = new EventEmitter<TablePagination>();
   @Input()
   public totalItens: number = 0;
+  @Input()
+  public showButtons: TableButtomType[] = [];
 
   public showSelectButton = true;
   public showDeleteButton = true;

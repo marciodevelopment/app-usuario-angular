@@ -8,6 +8,8 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UsuarioPesquisaResponse } from 'src/app/modules/usuario/interfaces/response/UsuarioPesquisaResponse';
+import { SearchQueryParams } from '../models/SearchQueryParams';
+import { PageResponse } from '../interfaces/PageResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +42,17 @@ export class HttpService {
       `${this.BASE_URL.concat(url)}/${id}`,
       this.httpOptions
     );
+  }
+
+  search<T>(
+    url: string,
+    searchQueryParams: SearchQueryParams
+  ): Observable<PageResponse<T>> {
+    const params = new HttpParams({
+      fromString: searchQueryParams.getQueryString(),
+    });
+    return this.get<PageResponse<T>>(url, {
+      params: params,
+    });
   }
 }
