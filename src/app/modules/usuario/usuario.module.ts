@@ -7,6 +7,16 @@ import { USUARIO_ROUTES } from './usuario.routing';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UsuarioFormComponent } from './usuario/usuario-form/usuario-form.component';
 import { ButtonModule } from 'primeng/button';
+import { CidadePesquisaComponent } from '../endereco/cidade-pesquisa/cidade-pesquisa.component';
+import { EnderecoModule } from '../endereco/endereco.module';
+import { CardModule } from 'primeng/card';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogModule,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
+
 @NgModule({
   declarations: [UsuarioPesquisaComponent, UsuarioFormComponent],
   imports: [
@@ -15,7 +25,11 @@ import { ButtonModule } from 'primeng/button';
     RouterModule.forChild(USUARIO_ROUTES),
     SharedModule,
     ButtonModule,
+    EnderecoModule,
+    CardModule,
+    DynamicDialogModule,
   ],
+  providers: [DialogService, DynamicDialogConfig],
   exports: [],
 })
 export class UsuarioModule {}

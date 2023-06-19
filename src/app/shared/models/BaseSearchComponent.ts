@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageResponse } from 'src/app/shared/interfaces/PageResponse';
 import { SearchDeleteAction } from 'src/app/shared/interfaces/SearchDeleteAction';
@@ -7,13 +7,28 @@ import { SearchFieldConfiguration } from 'src/app/shared/models/SearchFieldConfi
 import { SearchQueryParams } from 'src/app/shared/models/SearchQueryParams';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { TableButtomType } from '../enums/TableButtomType';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
-export abstract class BaseSearchComponent {
-  public pageResponse!: PageResponse<any>;
+export abstract class BaseSearchComponent<T> {
+  public pageResponse!: PageResponse<T>;
   private toastService: ToastService = inject(ToastService);
   private router: Router = inject(Router);
+  private dialogRefConfig: DynamicDialogConfig = inject(DynamicDialogConfig);
+  private dialogRef: DynamicDialogRef = inject(DynamicDialogRef);
 
-  constructor(private service: any, private titleMessage: string) {}
+  constructor(
+    private service: any,
+    private titleMessage: string,
+    public _showButtons: TableButtomType[]
+  ) {}
+
+  private isDialog(): boolean {
+    return Object.keys(this.dialogRefConfig).length > 0;
+  }
+
+  public onSelectItem(event: any) {
+    this.dialogRef.close(event);
+  }
 
   public onSearch(event: SearchQueryParams) {
     this.service.pesquisar(event).subscribe({
@@ -40,6 +55,12 @@ export abstract class BaseSearchComponent {
     this.router.navigate([this.router.url, 'edit', idItem]);
   }
 
+  public get showButtons(): TableButtomType[] {
+    if (this.isDialog()) {
+      return [TableButtomType.SELECT];
+    }
+    return this._showButtons;
+  }
+
   public abstract get searchConfiguration(): SearchConfiguration;
-  public abstract get showButtons(): TableButtomType[];
 }

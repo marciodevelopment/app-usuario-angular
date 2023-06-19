@@ -11,16 +11,24 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { SearchDeleteAction } from 'src/app/shared/interfaces/SearchDeleteAction';
 import { BaseSearchComponent } from '../../../../shared/models/BaseSearchComponent';
 import { TableButtomType } from 'src/app/shared/enums/TableButtomType';
-import { Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-usuario-pesquisa',
   templateUrl: './usuario-pesquisa.component.html',
   styleUrls: ['./usuario-pesquisa.component.scss'],
 })
-export class UsuarioPesquisaComponent extends BaseSearchComponent {
-  constructor(private usuarioService: UsuarioService) {
-    super(usuarioService, 'Usuário');
+export class UsuarioPesquisaComponent extends BaseSearchComponent<UsuarioPesquisaResponse> {
+  constructor(private usuarioService: UsuarioService, public route: Router) {
+    super(usuarioService, 'Usuário', [
+      TableButtomType.DELETE,
+      TableButtomType.EDIT,
+    ]);
   }
 
   public override get searchConfiguration(): SearchConfiguration {
@@ -31,9 +39,5 @@ export class UsuarioPesquisaComponent extends BaseSearchComponent {
       new SearchFieldConfiguration('sexo', 'Sexo', true),
       new SearchFieldConfiguration('nrCpf', 'Nr. CPF', true, '10%'),
     ]);
-  }
-
-  public override get showButtons(): TableButtomType[] {
-    return [TableButtomType.DELETE, TableButtomType.EDIT];
   }
 }

@@ -1,0 +1,35 @@
+<div class="formgrid grid">
+  <div class="field col-12 md:col-3">
+    <label for="cdCidade">Cód. Cidade:</label>
+    <input
+      id="cdCidade"
+      disabled="true"
+      [ngModel]="cidadeSelecionada?.cdCidade"
+      type="text"
+      class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+    />
+  </div>
+  <div class="field col-12 md:col-7">
+    <label for="nmCidade">Nome Cidade:</label>
+    <input
+      id="nmCidade"
+      [ngModel]="cidadeSelecionada?.nmCidade"
+      disabled="true"
+      type="text"
+      class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+    />
+  </div>
+  <div class="field col-12 md:col-2">
+    <button
+      type="button"
+      class="p-button-success mt-3"
+      pButton
+      pRipple
+      icon="pi pi-check"
+      label="Pesquisar"
+      (click)="clickPesquisar()"
+      pTooltip="Selecionar Item"
+      tooltipPosition="top"
+    ></button>
+  </div>
+</div>
