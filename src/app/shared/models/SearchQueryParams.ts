@@ -26,4 +26,10 @@ export class SearchQueryParams {
     if (queryStringReduce) queryString = `${queryString}&${queryStringReduce}`;
     return queryString;
   }
+
+  public static of(name: string, value: any): SearchQueryParams {
+    return new SearchQueryParams(new TablePagination(1, 1), [
+      new SearchItem(name, value),
+    ]);
+  }
 }

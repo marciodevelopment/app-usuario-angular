@@ -12,6 +12,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
+
 import {
   DialogService,
   DynamicDialogModule,
@@ -32,6 +34,7 @@ import {
     AutoCompleteModule,
     FormsModule,
     DynamicDialogModule,
+    InputNumberModule,
   ],
   providers: [DialogService, DynamicDialogRef, DynamicDialogRef],
   exports: [CidadePesquisaFormComponent],

@@ -3,8 +3,9 @@
     <label for="cdCidade">Cód. Cidade:</label>
     <input
       id="cdCidade"
-      disabled="true"
+      pInputText
       [ngModel]="cidadeSelecionada?.cdCidade"
+      (change)="changeEvent($event)"
       type="text"
       class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
     />
@@ -14,8 +15,8 @@
     <input
       id="nmCidade"
       [ngModel]="cidadeSelecionada?.nmCidade"
-      disabled="true"
       type="text"
+      disabled="true"
       class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
     />
   </div>

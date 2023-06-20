@@ -5,8 +5,8 @@ export class TablePagination {
   constructor(
     public page: number,
     public size: number,
-    public sortField: string,
-    public direction: string
+    public sortField?: string,
+    public direction?: string
   ) {}
 
   getSearchItems(): Array<SearchItem> {

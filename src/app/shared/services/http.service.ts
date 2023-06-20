@@ -44,6 +44,21 @@ export class HttpService {
     );
   }
 
+  put<T>(url: string, id: number, request: T): Observable<Object> {
+    return this.http.put(
+      `${this.BASE_URL.concat(url)}/${id}`,
+      request,
+      this.httpOptions
+    );
+  }
+
+  getById<T>(url: string, id: string): Observable<T> {
+    return this.http.get<T>(
+      `${this.BASE_URL.concat(url)}/${id}`,
+      this.httpOptions
+    );
+  }
+
   search<T>(
     url: string,
     searchQueryParams: SearchQueryParams

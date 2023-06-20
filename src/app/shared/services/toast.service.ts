@@ -29,4 +29,8 @@ export class ToastService {
   toastDeleteItem(itemDescription: string): void {
     this.successToast('${itemDescription} excluído com sucesso.');
   }
+
+  toastSavedItem(itemDescription: string): void {
+    this.successToast('${itemDescription} salvo com sucesso.');
+  }
 }

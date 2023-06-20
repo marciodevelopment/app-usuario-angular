@@ -7,6 +7,8 @@ import { PageResponse } from '../../../shared/interfaces/PageResponse';
 import { SearchQueryParams } from '../../../shared/models/SearchQueryParams';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UsuarioResponse } from '../interfaces/response/UsuarioResponse';
+import { UsuarioAtualizacaoRequest } from '../interfaces/request/UsuarioAtualizacaoRequest';
 @Injectable({
   providedIn: 'root',
 })
@@ -31,5 +33,23 @@ export class UsuarioService {
 
   delete(cdUsuario: number): Observable<Object> {
     return this.httpService.delete(this.SERVICE_URL, cdUsuario);
+  }
+
+  getById(cdUsuario: string): Observable<UsuarioResponse> {
+    return this.httpService.getById<UsuarioResponse>(
+      this.SERVICE_URL,
+      cdUsuario
+    );
+  }
+
+  salvarAtualizacao(
+    cdUsuario: number,
+    usuarioAtualizacao: UsuarioAtualizacaoRequest
+  ): Observable<Object> {
+    return this.httpService.put<UsuarioAtualizacaoRequest>(
+      this.SERVICE_URL,
+      cdUsuario,
+      usuarioAtualizacao
+    );
   }
 }

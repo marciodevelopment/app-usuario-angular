@@ -12,7 +12,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableButtonsComponent } from './components/table-buttons/table-buttons.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { HttpService } from './services/http.service';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HttpService } from './services/http.service';
     SearchFilterComponent,
     SearchComponent,
     TableButtonsComponent,
+    CalendarComponent,
   ],
   imports: [
     CommonModule,
@@ -31,8 +33,9 @@ import { HttpService } from './services/http.service';
     ReactiveFormsModule,
     TooltipModule,
     ConfirmDialogModule,
+    CalendarModule,
   ],
-  exports: [SearchComponent],
+  exports: [SearchComponent, CalendarComponent],
   providers: [ConfirmationService],
 })
 export class SharedModule {}

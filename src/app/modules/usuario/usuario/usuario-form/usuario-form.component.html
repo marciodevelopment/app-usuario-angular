@@ -1,2 +1,29 @@
-<p>usuario-form works!</p>
-<app-cidade-pesquisa-form></app-cidade-pesquisa-form>
+<form [formGroup]="usuarioForm" (ngSubmit)="salvarUsuario()">
+  <div class="card flex flex-column md:flex-column gap-3">
+    <input pInputText placeholder="Nome" formControlName="nmUsuario" />
+    <app-calendar
+      placeholder="Data nascimento"
+      formControlName="dtNascimento"
+      dateFormat="dd/mm/yy"
+    />
+    <input pInputText placeholder="Mãe" formControlName="nmMae" />
+    <input
+      pInputText
+      placeholder="Cidade de Nascimento"
+      formControlName="cdCidadeNascimento"
+    />
+    <input pInputText placeholder="Sexo" formControlName="sexo" />
+    <input pInputText placeholder="Nome Social" formControlName="nmSocial" />
+    <input pInputText placeholder="Nome Pai" formControlName="nmPai" />
+    <input pInputText placeholder="Nr. CPF" formControlName="nrCpf" />
+    <app-calendar
+      formControlName="dtEmissaoCpf"
+      placeholder="Data Emissão"
+      dateFormat="dd/mm/yy"
+    />
+    <p-button type="submit" label="Salvar" [disabled]="!usuarioForm.valid">
+    </p-button>
+    <p-button type="button" label="Voltar" (onClick)="clickVoltar()">
+    </p-button>
+  </div>
+</form>
