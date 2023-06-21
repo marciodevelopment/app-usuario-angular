@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, forwardRef, inject } from '@angular/core';
+import { Component, Input, OnInit, forwardRef } from '@angular/core';
 import { CidadePesquisaReponse } from '../interfaces/CidadePesquisaReponse';
 import { CidadeService } from '../services/cidade.service';
 import { take } from 'rxjs';
@@ -49,7 +49,7 @@ export class CidadePesquisaFormComponent
   }
 
   private pesquisar(name: string, value: any) {
-    this.cidadeService.pesquisar(SearchQueryParams.of(name, value)).subscribe({
+    this.cidadeService.search(SearchQueryParams.of(name, value)).subscribe({
       next: (resp) => {
         if (resp.content.length > 0) {
           this.cidadeSelecionada = resp.content[0];

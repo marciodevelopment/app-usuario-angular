@@ -25,7 +25,7 @@ export class CalendarComponent implements ControlValueAccessor {
   }
 
   onClose(event: Event) {
-    this.onChangeFormControl(null);
+    this.onChangeFormControl(this.date);
   }
 
   convertStringToDate(dateString: string): Date | null {

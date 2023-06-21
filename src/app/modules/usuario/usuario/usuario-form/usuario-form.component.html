@@ -8,13 +8,6 @@
     />
     <input pInputText placeholder="Mãe" formControlName="nmMae" />
     <app-cidade-pesquisa-form formControlName="cdCidadeNascimento" />
-    <!--
-    <input
-      pInputText
-      placeholder="Cidade de Nascimento"
-
-    />
-    -->
     <input pInputText placeholder="Sexo" formControlName="sexo" />
     <input pInputText placeholder="Nome Social" formControlName="nmSocial" />
     <input pInputText placeholder="Nome Pai" formControlName="nmPai" />
@@ -24,13 +17,9 @@
       placeholder="Data Emissão"
       dateFormat="dd/mm/yy"
     />
-    <p-button
-      type="submit"
-      label="Salvar"
-      [disabled]="!usuarioForm.valid || estaEmProcessamento"
-    >
+    <p-button type="submit" label="Salvar" [disabled]="!usuarioForm.valid">
     </p-button>
-    <p-button type="button" label="Voltar" (onClick)="clickVoltar()">
-    </p-button>
+    <p-button type="button" label="Voltar" (onClick)="clickBack()"> </p-button>
+    <p-button type="button" label="Voltar" (onClick)="onTeste()"> </p-button>
   </div>
 </form>

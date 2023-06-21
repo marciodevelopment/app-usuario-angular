@@ -7,16 +7,17 @@ import { SearchQueryParams } from 'src/app/shared/models/SearchQueryParams';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { TableButtomType } from '../enums/TableButtomType';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { BaseSearchService } from '../interfaces/BaseSearchService';
 
-export abstract class BaseSearchComponent<T> {
-  public pageResponse!: PageResponse<T>;
+export abstract class BaseSearchComponent<SearchResponseType> {
+  public pageResponse!: PageResponse<SearchResponseType>;
   private toastService: ToastService = inject(ToastService);
   private router: Router = inject(Router);
   private dialogRefConfig: DynamicDialogConfig = inject(DynamicDialogConfig);
   private dialogRef: DynamicDialogRef = inject(DynamicDialogRef);
 
   constructor(
-    private service: any,
+    private service: BaseSearchService<SearchResponseType>,
     private titleMessage: string,
     public _showButtons: TableButtomType[]
   ) {}
@@ -25,16 +26,16 @@ export abstract class BaseSearchComponent<T> {
     return Object.keys(this.dialogRefConfig).length > 0;
   }
 
-  public onSelectItem(event: T) {
+  public onSelectItem(event: SearchResponseType) {
     this.dialogRef.close(event);
   }
 
   public onSearch(event: SearchQueryParams) {
-    this.service.pesquisar(event).subscribe({
-      next: (response: PageResponse<T>) => {
+    this.service.search(event).subscribe({
+      next: (response: PageResponse<SearchResponseType>) => {
         return (this.pageResponse = response);
       },
-      error: (err: any) => console.log('error', err),
+      error: (err) => console.log('error', err),
     });
   }
 
@@ -49,8 +50,11 @@ export abstract class BaseSearchComponent<T> {
       });
   }
 
-  public onEditItem(itemSelected: any) {
-    const idItem = itemSelected[this.searchConfiguration.idFieldName];
+  public onEditItem(itemSelected: SearchResponseType) {
+    const idItem =
+      itemSelected[
+        this.searchConfiguration.idFieldName as keyof SearchResponseType
+      ];
     this.router.navigate([this.router.url, 'edit', idItem]);
   }
 
