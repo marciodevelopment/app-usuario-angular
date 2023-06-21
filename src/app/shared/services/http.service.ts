@@ -1,13 +1,6 @@
-import {
-  HttpClient,
-  HttpContext,
-  HttpEvent,
-  HttpHeaders,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UsuarioPesquisaResponse } from 'src/app/modules/usuario/interfaces/response/UsuarioPesquisaResponse';
 import { SearchQueryParams } from '../models/SearchQueryParams';
 import { PageResponse } from '../interfaces/PageResponse';
 
@@ -37,22 +30,28 @@ export class HttpService {
     });
   }
 
-  delete(url: string, id: number): Observable<Object> {
-    return this.http.delete(
-      `${this.BASE_URL.concat(url)}/${id}`,
-      this.httpOptions
-    );
+  delete(url: string, id: number): Observable<string> {
+    return this.http.delete(`${this.BASE_URL.concat(url)}/${id}`, {
+      ...this.httpOptions,
+      responseType: 'text',
+    });
   }
 
-  put<T>(url: string, id: number, request: T): Observable<Object> {
-    return this.http.put(
-      `${this.BASE_URL.concat(url)}/${id}`,
-      request,
-      this.httpOptions
-    );
+  post<T>(url: string, request: T): Observable<string> {
+    return this.http.post(this.BASE_URL.concat(url), request, {
+      ...this.httpOptions,
+      responseType: 'text',
+    });
   }
 
-  getById<T>(url: string, id: string): Observable<T> {
+  put<T>(url: string, id: number, request: T): Observable<string> {
+    return this.http.put(`${this.BASE_URL.concat(url)}/${id}`, request, {
+      ...this.httpOptions,
+      responseType: 'text',
+    });
+  }
+
+  getById<T>(url: string, id: number): Observable<T> {
     return this.http.get<T>(
       `${this.BASE_URL.concat(url)}/${id}`,
       this.httpOptions

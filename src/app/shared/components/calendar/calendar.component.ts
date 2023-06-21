@@ -20,33 +20,12 @@ export class CalendarComponent implements ControlValueAccessor {
   private onChangeFormControl!: any;
   public date!: Date | null;
 
-  writeValue(dateStr: string): void {
-    if (dateStr) this.date = new Date(dateStr);
-  }
-
   onBlur(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    const newDate: Date | null = this.convertStringToDate(value);
-    console.log('this.date on blur', this.date);
     this.onChangeFormControl(this.date);
   }
 
   onClose(event: Event) {
-    console.log('this.date onClose', this.date);
-    this.onChangeFormControl(this.date);
-  }
-  onFocus(event: Event) {
-    console.log('on onFocus', event);
-  }
-  onSelect(event: Event) {
-    console.log('on select', event);
-  }
-  onTodayClick(event: Date) {
-    console.log('onTodayClick', event);
-  }
-
-  onInput(event: Event) {
-    console.log('onInputevent', event);
+    this.onChangeFormControl(null);
   }
 
   convertStringToDate(dateString: string): Date | null {
@@ -68,5 +47,11 @@ export class CalendarComponent implements ControlValueAccessor {
   registerOnChange(onChange: any): void {
     this.onChangeFormControl = onChange;
   }
+
   registerOnTouched(onTouched: any): void {}
+
+  writeValue(dateStr: string): void {
+    if (dateStr) this.date = new Date(dateStr);
+    else this.date = null;
+  }
 }

@@ -1,31 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { UsuarioResponse } from '../../interfaces/response/UsuarioResponse';
 import { UsuarioAtualizacaoRequest } from '../../interfaces/request/UsuarioAtualizacaoRequest';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { SexoType } from '../../interfaces/SexoType';
-import { DropdownItem } from 'primeng/dropdown';
-import { UsuarioPesquisaComponent } from '../usuario-pesquisa/usuario-pesquisa.component';
+import { Location } from '@angular/common';
+import { FormGroupUtils } from 'src/app/shared/utils/FormGroupUtils';
+import { UsuarioNovoRequest } from '../../interfaces/request/UsuarioNovoRequest';
+import { Observable, Observer, Subscription } from 'rxjs';
+
+export class BaseFormComponent<NewRequestType, UpdateRequest> {
+  private toastService: ToastService = inject(ToastService);
+  private router: Router = inject(Router);
+  //private service:
+}
 
 @Component({
   selector: 'app-usuario-form',
   templateUrl: './usuario-form.component.html',
 })
-export class UsuarioFormComponent {
+export class UsuarioFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
-    private tostService: ToastService
-  ) {}
+    private toastService: ToastService,
+    private location: Location
+  ) {
+    if (this.route.snapshot.paramMap.has('id')) {
+      this.executarSalvar = this.salvarUsuarioAtualizacao;
+      this.cdUsuarioEdicao = this.route.snapshot.paramMap.get(
+        'id'
+      ) as unknown as number;
+      console.log('value oc cdUsuario', this.cdUsuarioEdicao);
+    }
+  }
 
   public usuarioForm = this.formBuilder.group({
     nmUsuario: ['', Validators.required],
@@ -39,70 +50,53 @@ export class UsuarioFormComponent {
     cdCidadeNascimento: ['', Validators.required],
   });
 
-  private usuarioEdicao?: UsuarioResponse;
-  private novoItem: boolean = true;
   private cdUsuarioEdicao!: number;
+  public executarSalvar = this.salvarUsuarioNovo;
+  public estaEmProcessamento = false;
 
   ngOnInit() {
-    let paramCdUsuario: any = this.route.snapshot.paramMap.get('id');
-    if (paramCdUsuario) {
-      this.cdUsuarioEdicao = paramCdUsuario as number;
-      this.usuarioService.getById(paramCdUsuario as string).subscribe({
-        next: (resp) => {
-          console.log('usuario server', resp);
-          //Object.assign(this.usuarioForm.controls, resp);
-          //console.log('usuario controls', this.usuarioForm.controls);
-          //this.usuarioForm.valueChanges;
-          this.convertToForm(resp);
-          console.log('after the controls', this.usuarioForm.controls);
-        },
+    if (this.route.snapshot.paramMap.has('id')) {
+      this.executarSalvar = this.salvarUsuarioAtualizacao;
+      this.cdUsuarioEdicao = this.route.snapshot.paramMap.get(
+        'id'
+      ) as unknown as number;
+      this.usuarioService.buscarPor(this.cdUsuarioEdicao).subscribe({
+        next: (resp) => FormGroupUtils.copyToFormGroup(resp, this.usuarioForm),
       });
     }
   }
 
-  convertToForm(usuarioResponse: UsuarioResponse) {
-    Object.keys(this.usuarioForm.controls).forEach((controlName) => {
-      if (controlName.indexOf('dt') == 0) {
-        const value: any =
-          usuarioResponse[controlName as keyof UsuarioResponse];
-        const date: Date = new Date(value);
-        this.usuarioForm.controls[
-          controlName as keyof typeof this.usuarioForm.controls
-        ].setValue('2022-06-20');
-      } else {
-        const value: any =
-          usuarioResponse[controlName as keyof UsuarioResponse];
-        this.usuarioForm.controls[
-          controlName as keyof typeof this.usuarioForm.controls
-        ].setValue(value);
-      }
+  onClickSubmit() {
+    this.estaEmProcessamento = true;
+    this.executarSalvar().subscribe({
+      next: () => {
+        this.toastService.toastItemSaved('Usuário');
+        this.clickVoltar();
+      },
+      error: () => (this.estaEmProcessamento = false),
     });
   }
 
-  salvarUsuario() {
-    if (!this.usuarioForm.value || !this.usuarioForm.valid) {
-      this.tostService.errorToast(
-        'Há dados inconsistentes no formulário',
-        'Dados inconsistentes'
+  salvarUsuarioNovo(): Observable<string> {
+    const usuarioNovo: UsuarioNovoRequest =
+      FormGroupUtils.generateInterfaceFormGroup<UsuarioNovoRequest>(
+        this.usuarioForm
       );
-      return;
-    }
-    if (this.novoItem) {
-    }
-    let formJson = JSON.stringify(this.usuarioForm.value);
-    const usuarioAtualizacao: UsuarioAtualizacaoRequest = JSON.parse(formJson);
-    this.usuarioService
-      .salvarAtualizacao(this.cdUsuarioEdicao, usuarioAtualizacao)
-      .subscribe({
-        next: (resp) => this.tostService.toastSavedItem('Usuário'),
-        error: (err) => console.log('erro', err),
-      });
+    return this.usuarioService.salvar(usuarioNovo);
+  }
+
+  salvarUsuarioAtualizacao(): Observable<string> {
+    const usuarioAtualizacao: UsuarioAtualizacaoRequest =
+      FormGroupUtils.generateInterfaceFormGroup<UsuarioAtualizacaoRequest>(
+        this.usuarioForm
+      );
+    return this.usuarioService.atualizar(
+      this.cdUsuarioEdicao,
+      usuarioAtualizacao
+    );
   }
 
   clickVoltar() {
-    console.log('dtEmissao', this.usuarioForm.value.dtEmissaoCpf);
-    let formJson = JSON.stringify(this.usuarioForm.value);
-    const usuarioAtualizacao: UsuarioAtualizacaoRequest = JSON.parse(formJson);
-    console.log('usuarioAtualizacao', usuarioAtualizacao);
+    this.location.back();
   }
 }

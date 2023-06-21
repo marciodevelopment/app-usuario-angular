@@ -6,14 +6,14 @@ import { SeverityType } from '../enums/SeverityType';
   providedIn: 'root',
 })
 export class ToastService {
-  private TOAST_LIFE: number = 2500;
+  private TOAST_LIFE = 2500;
   constructor(private messageService: MessageService) {}
 
-  successToast(detail?: string, summary: string = 'Sucesso'): void {
+  successToast(detail?: string, summary = 'Sucesso'): void {
     this.toast(SeverityType.SUCCESS, summary, detail);
   }
 
-  errorToast(detail?: string, summary: string = 'Erro'): void {
+  errorToast(detail?: string, summary = 'Erro'): void {
     this.toast(SeverityType.ERROR, summary, detail);
   }
 
@@ -26,11 +26,15 @@ export class ToastService {
     });
   }
 
-  toastDeleteItem(itemDescription: string): void {
-    this.successToast('${itemDescription} excluído com sucesso.');
+  toastItemDeleted(itemDescription: string): void {
+    this.successToast(`${itemDescription} excluído com sucesso.`);
   }
 
-  toastSavedItem(itemDescription: string): void {
-    this.successToast('${itemDescription} salvo com sucesso.');
+  toastItemSaved(itemDescription: string): void {
+    this.successToast(`${itemDescription} salvo com sucesso.`);
+  }
+
+  toastItemUpdated(itemDescription: string): void {
+    this.successToast(`${itemDescription} atualizado com sucesso.`);
   }
 }

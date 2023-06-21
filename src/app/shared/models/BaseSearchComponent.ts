@@ -1,9 +1,8 @@
-import { OnInit, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageResponse } from 'src/app/shared/interfaces/PageResponse';
 import { SearchDeleteAction } from 'src/app/shared/interfaces/SearchDeleteAction';
 import { SearchConfiguration } from 'src/app/shared/models/SearchConfiguration';
-import { SearchFieldConfiguration } from 'src/app/shared/models/SearchFieldConfiguration';
 import { SearchQueryParams } from 'src/app/shared/models/SearchQueryParams';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { TableButtomType } from '../enums/TableButtomType';
@@ -26,13 +25,13 @@ export abstract class BaseSearchComponent<T> {
     return Object.keys(this.dialogRefConfig).length > 0;
   }
 
-  public onSelectItem(event: any) {
+  public onSelectItem(event: T) {
     this.dialogRef.close(event);
   }
 
   public onSearch(event: SearchQueryParams) {
     this.service.pesquisar(event).subscribe({
-      next: (response: any) => {
+      next: (response: PageResponse<T>) => {
         return (this.pageResponse = response);
       },
       error: (err: any) => console.log('error', err),
@@ -44,7 +43,7 @@ export abstract class BaseSearchComponent<T> {
       .delete(deleteAction.itemSelected[this.searchConfiguration.idFieldName])
       .subscribe({
         next: () => {
-          this.toastService.toastDeleteItem(this.titleMessage);
+          this.toastService.toastItemDeleted(this.titleMessage);
           deleteAction.onDeleteComplete();
         },
       });

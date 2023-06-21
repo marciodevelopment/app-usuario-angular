@@ -1,22 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SearchConfiguration } from 'src/app/shared/models/SearchConfiguration';
 import { UsuarioService } from '../../services/usuario.service';
-import { SearchFilterComponent } from 'src/app/shared/components/search-filter/search-filter.component';
 import { SearchFieldConfiguration } from 'src/app/shared/models/SearchFieldConfiguration';
-import { Observable, filter } from 'rxjs';
-import { SearchQueryParams } from 'src/app/shared/models/SearchQueryParams';
-import { PageResponse } from 'src/app/shared/interfaces/PageResponse';
 import { UsuarioPesquisaResponse } from '../../interfaces/response/UsuarioPesquisaResponse';
-import { ToastService } from 'src/app/shared/services/toast.service';
-import { SearchDeleteAction } from 'src/app/shared/interfaces/SearchDeleteAction';
 import { BaseSearchComponent } from '../../../../shared/models/BaseSearchComponent';
 import { TableButtomType } from 'src/app/shared/enums/TableButtomType';
-import { Route, Router } from '@angular/router';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuario-pesquisa',

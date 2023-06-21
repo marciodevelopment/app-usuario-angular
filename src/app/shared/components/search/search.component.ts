@@ -1,4 +1,5 @@
 import {
+  AfterContentChecked,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -6,49 +7,46 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { SearchFieldConfiguration } from '../../models/SearchFieldConfiguration';
+
 import { SearchConfiguration } from '../../models/SearchConfiguration';
 import { DynamicFilter } from '../../models/DynamicFilter';
 import { DynamicColum } from '../../models/DynamicColumn';
-import { config, timer } from 'rxjs';
-import { ItemSelectedDynamicTableAction } from '../../models/ItemSelectedDynamicTableAction';
 import { TablePagination } from '../../models/TablePagination';
-import { Table } from 'primeng/table';
 import { SearchQueryParams } from '../../models/SearchQueryParams';
 import { SearchItem } from '../../models/SearchItem';
 import { PageResponse } from '../../interfaces/PageResponse';
-import { ActionDynamicTable } from '../../models/ActionDynamicTable';
 import { SearchDeleteAction } from '../../interfaces/SearchDeleteAction';
 import { TableButtomType } from '../../enums/TableButtomType';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterContentChecked {
   @Input()
   public searchConfiguration!: SearchConfiguration;
   @Input()
   public showButtons: TableButtomType[] = [];
   @Output()
-  public onSearch = new EventEmitter<SearchQueryParams>();
+  public clickSearch = new EventEmitter<SearchQueryParams>();
   @Output()
-  public onSelectItem = new EventEmitter<any>();
+  public clickSelectItem = new EventEmitter<any>();
   @Output()
-  public onDeleteItem = new EventEmitter<any>();
+  public clickDeleteItem = new EventEmitter<any>();
   @Output()
-  public onEditItem = new EventEmitter<any>();
+  public clickEditItem = new EventEmitter<any>();
 
   public searhFilters: Array<DynamicFilter> = [];
   public columns: Array<DynamicColum> = [];
   public loading = true;
   public items: any[] = [];
-  public totalItens: number = 0;
+  public totalItens = 0;
   public pagination!: TablePagination;
   public filters: Array<DynamicFilter> = [];
 
-  constructor(private ref: ChangeDetectorRef) {}
+  constructor(private ref: ChangeDetectorRef, private router: Router) {}
 
   ngAfterContentChecked() {
     this.ref.detectChanges();
@@ -93,7 +91,7 @@ export class SearchComponent implements OnInit {
         .map((filter) => new SearchItem(filter.field, filter.value as string))
     );
 
-    this.onSearch.emit(queryParams);
+    this.clickSearch.emit(queryParams);
   }
 
   @Input()
@@ -106,11 +104,15 @@ export class SearchComponent implements OnInit {
   }
 
   onClickSelectItem(itemSelected: any) {
-    this.onSelectItem.emit(itemSelected);
+    this.clickSelectItem.emit(itemSelected);
   }
 
   onClickEditItem(itemSelected: any) {
-    this.onEditItem.emit(itemSelected);
+    this.clickEditItem.emit(itemSelected);
+  }
+
+  onClickNew() {
+    this.router.navigate([this.router.url, 'new']);
   }
 
   onClickDeleteItem(itemSelected: any): void {
@@ -121,6 +123,6 @@ export class SearchComponent implements OnInit {
         this.search();
       },
     };
-    this.onDeleteItem.emit(deleteAction);
+    this.clickDeleteItem.emit(deleteAction);
   }
 }

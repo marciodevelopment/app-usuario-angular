@@ -1,16 +1,11 @@
-import { Component, Input, forwardRef, inject } from '@angular/core';
+import { Component, Input, OnInit, forwardRef, inject } from '@angular/core';
 import { CidadePesquisaReponse } from '../interfaces/CidadePesquisaReponse';
 import { CidadeService } from '../services/cidade.service';
 import { take } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { UsuarioPesquisaComponent } from '../../usuario/usuario/usuario-pesquisa/usuario-pesquisa.component';
 import { CidadePesquisaComponent } from '../cidade-pesquisa/cidade-pesquisa.component';
 import { SearchQueryParams } from 'src/app/shared/models/SearchQueryParams';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-cidade-pesquisa-form',
@@ -23,7 +18,9 @@ import {
     },
   ],
 })
-export class CidadePesquisaFormComponent implements ControlValueAccessor {
+export class CidadePesquisaFormComponent
+  implements ControlValueAccessor, OnInit
+{
   @Input()
   public cdCidade?: number;
   public cidadeSelecionada?: CidadePesquisaReponse;
@@ -76,6 +73,7 @@ export class CidadePesquisaFormComponent implements ControlValueAccessor {
     this.ref.onClose.pipe(take(1)).subscribe({
       next: (resp) => {
         this.cidadeSelecionada = resp;
+        this.onChangeFormControl(this.cidadeSelecionada?.cdCidade);
       },
     });
   }

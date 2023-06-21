@@ -1,4 +1,4 @@
-<form [formGroup]="usuarioForm" (ngSubmit)="salvarUsuario()">
+<form [formGroup]="usuarioForm" (ngSubmit)="onClickSubmit()">
   <div class="card flex flex-column md:flex-column gap-3">
     <input pInputText placeholder="Nome" formControlName="nmUsuario" />
     <app-calendar
@@ -7,11 +7,14 @@
       dateFormat="dd/mm/yy"
     />
     <input pInputText placeholder="Mãe" formControlName="nmMae" />
+    <app-cidade-pesquisa-form formControlName="cdCidadeNascimento" />
+    <!--
     <input
       pInputText
       placeholder="Cidade de Nascimento"
-      formControlName="cdCidadeNascimento"
+
     />
+    -->
     <input pInputText placeholder="Sexo" formControlName="sexo" />
     <input pInputText placeholder="Nome Social" formControlName="nmSocial" />
     <input pInputText placeholder="Nome Pai" formControlName="nmPai" />
@@ -21,7 +24,11 @@
       placeholder="Data Emissão"
       dateFormat="dd/mm/yy"
     />
-    <p-button type="submit" label="Salvar" [disabled]="!usuarioForm.valid">
+    <p-button
+      type="submit"
+      label="Salvar"
+      [disabled]="!usuarioForm.valid || estaEmProcessamento"
+    >
     </p-button>
     <p-button type="button" label="Voltar" (onClick)="clickVoltar()">
     </p-button>
