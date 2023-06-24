@@ -1,0 +1,27 @@
+<div class="flex align-content-end flex-wrap flex-row-reverse mt-2">
+  <p-button
+    *ngIf="showSaveSubmit"
+    type="submit"
+    icon="pi pi-save"
+    label="Salvar"
+    [disabled]="disabledSave"
+    icon="pi pi-file"
+    class="ml-2"
+  />
+  <p-button
+    type="submit"
+    label="Novo"
+    (onClick)="onClickNew()"
+    class="ml-2"
+    icon="pi pi-plus"
+    *ngIf="showNew"
+  />
+  <p-button
+    type="button"
+    label="Voltar"
+    (onClick)="onClickBack()"
+    *ngIf="showBack"
+    icon="pi pi-step-backward"
+  >
+  </p-button>
+</div>

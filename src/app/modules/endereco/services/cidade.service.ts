@@ -6,8 +6,8 @@ import { CrudService } from 'src/app/shared/services/CrudService';
   providedIn: 'root',
 })
 export class CidadeService extends CrudService<
-  null,
   CidadePesquisaReponse,
+  null,
   null,
   null
 > {

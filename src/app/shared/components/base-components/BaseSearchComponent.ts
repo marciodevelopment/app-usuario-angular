@@ -5,9 +5,9 @@ import { SearchDeleteAction } from 'src/app/shared/interfaces/SearchDeleteAction
 import { SearchConfiguration } from 'src/app/shared/models/SearchConfiguration';
 import { SearchQueryParams } from 'src/app/shared/models/SearchQueryParams';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { TableButtomType } from '../enums/TableButtomType';
+import { TableButtomType } from '../../enums/TableButtomType';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { BaseSearchService } from '../interfaces/BaseSearchService';
+import { BaseSearchService } from '../../interfaces/BaseSearchService';
 
 export abstract class BaseSearchComponent<SearchResponseType> {
   public pageResponse!: PageResponse<SearchResponseType>;

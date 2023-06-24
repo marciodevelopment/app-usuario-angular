@@ -7,9 +7,9 @@ import { PageResponse } from '../interfaces/PageResponse';
 import { Observable } from 'rxjs';
 
 export class CrudService<
-  NewRequestType,
   SearchResponseType,
   EditResponseType,
+  NewRequestType,
   UpdateRequestType
 > implements
     BaseFormService<NewRequestType, UpdateRequestType, EditResponseType>

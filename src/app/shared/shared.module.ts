@@ -14,6 +14,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CalendarModule } from 'primeng/calendar';
+import { ButtonsBarComponent } from './components/buttons-bar/buttons-bar.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { CalendarModule } from 'primeng/calendar';
     SearchComponent,
     TableButtonsComponent,
     CalendarComponent,
+    ButtonsBarComponent,
   ],
   imports: [
     CommonModule,
@@ -34,8 +37,9 @@ import { CalendarModule } from 'primeng/calendar';
     TooltipModule,
     ConfirmDialogModule,
     CalendarModule,
+    DropdownModule,
   ],
-  exports: [SearchComponent, CalendarComponent],
+  exports: [SearchComponent, CalendarComponent, ButtonsBarComponent],
   providers: [ConfirmationService],
 })
 export class SharedModule {}

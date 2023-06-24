@@ -41,7 +41,9 @@ export class SearchComponent implements OnInit, AfterContentChecked {
   public searhFilters: Array<DynamicFilter> = [];
   public columns: Array<DynamicColum> = [];
   public loading = true;
+  /* eslint-disable */
   public items: any[] = [];
+  /* eslint-enable */
   public totalItens = 0;
   public pagination!: TablePagination;
   public filters: Array<DynamicFilter> = [];
@@ -59,12 +61,22 @@ export class SearchComponent implements OnInit, AfterContentChecked {
     if (searchFieldConfiguration) {
       this.searhFilters = searchFieldConfiguration
         .filter((config) => config.filter)
-        .map((config) => new DynamicFilter(config.header, config.field));
+        .map(
+          (config) =>
+            new DynamicFilter(
+              config.header,
+              config.field,
+              config.filter?.width,
+              config.filter?.entriesType
+            )
+        );
       searchFieldConfiguration.map(
-        (config) => new DynamicColum(config.field, config.header, config.width)
+        (config) =>
+          new DynamicColum(config.field, config.header, config.table?.width)
       );
       this.columns = searchFieldConfiguration.map(
-        (config) => new DynamicColum(config.field, config.header, config.width)
+        (config) =>
+          new DynamicColum(config.field, config.header, config.table?.width)
       );
     }
   }

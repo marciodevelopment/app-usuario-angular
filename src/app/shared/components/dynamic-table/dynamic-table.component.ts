@@ -1,12 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
-import { ActionDynamicTable } from '../../models/ActionDynamicTable';
 import { ItemSelectedDynamicTableAction } from '../../models/ItemSelectedDynamicTableAction';
 import { DynamicColum } from '../../models/DynamicColumn';
 import { TablePagination } from '../../models/TablePagination';
@@ -20,7 +13,7 @@ export class DynamicTableComponent {
   @Input()
   public items: any[] = [];
   @Input()
-  public loading: boolean = false;
+  public loading = false;
   @Input()
   public columns: Array<DynamicColum> = [];
   @Output()
@@ -33,7 +26,7 @@ export class DynamicTableComponent {
   @Output()
   public onChangePagination = new EventEmitter<TablePagination>();
   @Input()
-  public totalItens: number = 0;
+  public totalItens = 0;
   @Input()
   public showButtons: TableButtomType[] = [];
 
@@ -55,10 +48,10 @@ export class DynamicTableComponent {
   }
 
   loadData(event: LazyLoadEvent) {
-    let page: number = 0;
-    let size: number = 10;
-    let direction: string = '';
-    let sortField: string = '';
+    let page = 0;
+    let size = 10;
+    let direction = '';
+    let sortField = '';
 
     if (event.first && event.rows) {
       page = event.first / event.rows;

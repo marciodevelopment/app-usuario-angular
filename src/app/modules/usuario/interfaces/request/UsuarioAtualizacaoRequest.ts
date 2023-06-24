@@ -1,4 +1,4 @@
-import { SexoType } from '../SexoType';
+import { SexoType } from '../../types/SexoType';
 
 export interface UsuarioAtualizacaoRequest {
   nmUsuario: string;

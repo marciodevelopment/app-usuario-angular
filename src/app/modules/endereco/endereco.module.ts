@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CidadePesquisaComponent } from './cidade-pesquisa/cidade-pesquisa.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ENDERECO_ROUTES } from './endereco.routing';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+
 import { CidadePesquisaFormComponent } from './cidade-pesquisa-form/cidade-pesquisa-form.component';
+import { CidadePesquisaComponent } from './cidade-pesquisa/cidade-pesquisa.component';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';

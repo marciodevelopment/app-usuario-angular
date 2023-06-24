@@ -9,8 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { ToastModule } from 'primeng/toast';
 
 @NgModule({
@@ -26,6 +26,7 @@ import { ToastModule } from 'primeng/toast';
     BrowserAnimationsModule,
     ConfirmDialogModule,
     ToastModule,
+    CascadeSelectModule,
   ],
   bootstrap: [AppComponent],
   providers: [ConfirmationService, MessageService],

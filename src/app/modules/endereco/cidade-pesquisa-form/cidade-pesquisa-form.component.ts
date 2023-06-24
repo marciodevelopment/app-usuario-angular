@@ -1,11 +1,10 @@
 import { Component, Input, OnInit, forwardRef } from '@angular/core';
 import { CidadePesquisaReponse } from '../interfaces/CidadePesquisaReponse';
 import { CidadeService } from '../services/cidade.service';
-import { take } from 'rxjs';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CidadePesquisaComponent } from '../cidade-pesquisa/cidade-pesquisa.component';
-import { SearchQueryParams } from 'src/app/shared/models/SearchQueryParams';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { BaseSearchFormComponent } from 'src/app/shared/components/base-components/BaseSearchFormComponent';
 
 @Component({
   selector: 'app-cidade-pesquisa-form',
@@ -19,73 +18,22 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class CidadePesquisaFormComponent
-  implements ControlValueAccessor, OnInit
+  extends BaseSearchFormComponent<CidadePesquisaReponse>
+  implements OnInit
 {
   @Input()
-  public cdCidade?: number;
-  public cidadeSelecionada?: CidadePesquisaReponse;
-  public filteredItems: CidadePesquisaReponse[] = [];
-  private ref!: DynamicDialogRef;
-  private onChangeFormControl!: any;
-
-  constructor(
-    private cidadeService: CidadeService,
-    private dialogService: DialogService
-  ) {}
+  public cdCidade?: string;
 
   ngOnInit() {
-    if (this.cdCidade) {
-      this.pesquisar('cdCidade', this.cdCidade);
-    }
+    super.onInit(this.cdCidade);
   }
 
-  changeEvent(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.cidadeSelecionada = undefined;
-    this.onChangeFormControl(undefined);
-    if (value) {
-      this.pesquisar('cdCidade', value);
-    }
+  constructor(private cidadeService: CidadeService) {
+    super(
+      'Pesquisar Cidades',
+      'cdCidade',
+      CidadePesquisaComponent,
+      cidadeService
+    );
   }
-
-  private pesquisar(name: string, value: any) {
-    this.cidadeService.search(SearchQueryParams.of(name, value)).subscribe({
-      next: (resp) => {
-        if (resp.content.length > 0) {
-          this.cidadeSelecionada = resp.content[0];
-          this.onChangeFormControl(resp.content[0].cdCidade);
-        }
-      },
-    });
-  }
-
-  clickPesquisar() {
-    this.ref = this.dialogService.open(CidadePesquisaComponent, {
-      header: 'Pesquisar Cidade',
-      width: '95%',
-      height: '95%',
-      contentStyle: { overflow: 'auto' },
-      baseZIndex: 1000,
-      maximizable: true,
-      position: 'center',
-      modal: true,
-    });
-    this.ref.onClose.pipe(take(1)).subscribe({
-      next: (resp) => {
-        this.cidadeSelecionada = resp;
-        this.onChangeFormControl(this.cidadeSelecionada?.cdCidade);
-      },
-    });
-  }
-
-  writeValue(cdCidade: string): void {
-    if (cdCidade) {
-      this.pesquisar('cdCidade', cdCidade);
-    }
-  }
-
-  registerOnChange(onChange: any): void {
-    this.onChangeFormControl = onChange;
-  }
-  registerOnTouched(onTouched: any): void {}
 }

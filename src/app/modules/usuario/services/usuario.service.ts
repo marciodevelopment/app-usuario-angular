@@ -9,9 +9,9 @@ import { CrudService } from 'src/app/shared/services/CrudService';
   providedIn: 'root',
 })
 export class UsuarioService extends CrudService<
-  UsuarioNovoRequest,
   UsuarioPesquisaResponse,
   UsuarioResponse,
+  UsuarioNovoRequest,
   UsuarioAtualizacaoRequest
 > {
   constructor() {

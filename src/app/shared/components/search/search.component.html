@@ -1,6 +1,6 @@
 <app-search-filter
   [filters]="searhFilters"
-  (onClickFilter)="onClickFilter($event)"
+  (clickFilter)="onClickFilter($event)"
 ></app-search-filter>
 <app-dynamic-table
   [loading]="loading"
@@ -13,6 +13,4 @@
   [totalItens]="totalItens"
   [showButtons]="showButtons"
 ></app-dynamic-table>
-<div class="flex flex-row flex-row-reverse flex-wrap mt-2">
-  <p-button label="Novo" icon="pi pi-file" (onClick)="onClickNew()" />
-</div>
+<app-buttons-bar (clickNew)="onClickNew()" />

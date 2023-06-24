@@ -2,11 +2,18 @@
   <div class="field" *ngFor="let filter of filters">
     <label [for]="filter.field">{{ filter.name }}</label>
     <input
+      *ngIf="!filter.entriesType"
       [id]="filter.field"
       type="text"
       pInputText
       [(ngModel)]="filter.value"
       class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+    />
+    <p-dropdown
+      *ngIf="filter.entriesType"
+      [options]="filter.entriesType"
+      [(ngModel)]="filter.value"
+      styleClass="w-full"
     />
   </div>
   <button

@@ -1,25 +1,80 @@
-<form [formGroup]="usuarioForm" (ngSubmit)="onClickSubmit()">
+<p-card styleClass="mt-2">
+  <form [formGroup]="usuarioForm" (ngSubmit)="onClickSubmit()">
+    <div class="formgrid grid">
+      <div class="field col-12 md:col-12">
+        <label for="nmUsuario">Nome</label>
+        <input
+          pInputText
+          formControlName="nmUsuario"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+      </div>
+      <div class="field col-12 md:col-12">
+        <label for="dtNascimento">Data nascimento</label>
+        <app-calendar formControlName="dtNascimento" dateFormat="dd/mm/yy" />
+      </div>
+      <div class="field col-12 md:col-12">
+        <label for="nmMae">Mãe</label>
+        <input
+          pInputText
+          formControlName="nmMae"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+      </div>
+      <div class="field col-12 md:col-12">
+        <label>Cidade de Nascimento</label>
+        <app-cidade-pesquisa-form formControlName="cdCidadeNascimento" />
+      </div>
+      <div class="field col-12 md:col-12">
+        <label>Sexo</label>
+        <p-dropdown
+          [options]="sexos"
+          formControlName="sexo"
+          placeholder="Sexo"
+          styleClass="w-full"
+        ></p-dropdown>
+      </div>
+    </div>
+    <div class="field col-12 md:col-12">
+      <label for="nmSocial">Nome Social</label>
+      <input
+        pInputText
+        formControlName="nmSocial"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+    <div class="field col-12 md:col-12">
+      <label for="nmPai">Nome Pai</label>
+      <input
+        pInputText
+        formControlName="nmPai"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+    <div class="field col-12 md:col-12">
+      <label for="nrCpf">Nr. CPF</label>
+      <input
+        pInputText
+        placeholder="Nr. CPF"
+        formControlName="nrCpf"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+    <div class="field col-12 md:col-12">
+      <label>Dt. emissão</label>
+      <app-calendar
+        formControlName="dtEmissaoCpf"
+        placeholder="Data Emissão"
+        dateFormat="dd/mm/yy"
+      />
+    </div>
+  </form>
+
   <div class="card flex flex-column md:flex-column gap-3">
-    <input pInputText placeholder="Nome" formControlName="nmUsuario" />
-    <app-calendar
-      placeholder="Data nascimento"
-      formControlName="dtNascimento"
-      dateFormat="dd/mm/yy"
+    <app-buttons-bar
+      [showSaveSubmit]="true"
+      [disabledSave]="!usuarioForm.valid"
+      (clickBack)="clickBack()"
     />
-    <input pInputText placeholder="Mãe" formControlName="nmMae" />
-    <app-cidade-pesquisa-form formControlName="cdCidadeNascimento" />
-    <input pInputText placeholder="Sexo" formControlName="sexo" />
-    <input pInputText placeholder="Nome Social" formControlName="nmSocial" />
-    <input pInputText placeholder="Nome Pai" formControlName="nmPai" />
-    <input pInputText placeholder="Nr. CPF" formControlName="nrCpf" />
-    <app-calendar
-      formControlName="dtEmissaoCpf"
-      placeholder="Data Emissão"
-      dateFormat="dd/mm/yy"
-    />
-    <p-button type="submit" label="Salvar" [disabled]="!usuarioForm.valid">
-    </p-button>
-    <p-button type="button" label="Voltar" (onClick)="clickBack()"> </p-button>
-    <p-button type="button" label="Voltar" (onClick)="onTeste()"> </p-button>
   </div>
-</form>
+</p-card>
