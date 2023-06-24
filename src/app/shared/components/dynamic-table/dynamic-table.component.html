@@ -27,7 +27,13 @@
           pResizableColumn
           pReorderableColumn
           pSortableColumn="{{ col.field }}"
-          [ngStyle]="{ width: col.width }"
+          [ngStyle]="{
+            width: col.width
+              ? col.width
+              : col.field.indexOf('cd') > -1 || col.field.indexOf('nr') > -1
+              ? '10%'
+              : ''
+          }"
         >
           {{ col.header }}
           <p-sortIcon field="{{ col.field }}"></p-sortIcon>

@@ -9,7 +9,7 @@ import { FormGroupUtils } from 'src/app/shared/utils/FormGroupUtils';
 import { Observable } from 'rxjs';
 
 import { BaseFormService } from 'src/app/shared/interfaces/BaseFormService';
-import { SexoType } from 'src/app/modules/usuario/types/SexoType';
+
 export abstract class BaseFormComponent<
   NewRequestType,
   UpdateRequestType,

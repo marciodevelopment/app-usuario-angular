@@ -9,6 +9,7 @@ import { UsuarioNovoRequest } from '../../interfaces/request/UsuarioNovoRequest'
 import { UsuarioResponse } from '../../interfaces/response/UsuarioResponse';
 import { BaseFormComponent } from 'src/app/shared/components/base-components/BaseFormComponent';
 import { SexoType } from '../../types/SexoType';
+import { EnumUtil } from '../../../../shared/utils/EnumUtil';
 
 @Component({
   selector: 'app-usuario-form',
@@ -34,10 +35,7 @@ export class UsuarioFormComponent
     cdCidadeNascimento: ['', Validators.required],
   });
 
-  public sexos = Object.entries(SexoType).map((value) => ({
-    value: value[0],
-    label: value[1],
-  }));
+  public sexos = EnumUtil.convertToComboboxValues(SexoType);
 
   constructor(
     private formBuilder: FormBuilder,

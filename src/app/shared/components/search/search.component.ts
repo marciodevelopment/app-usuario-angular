@@ -60,7 +60,7 @@ export class SearchComponent implements OnInit, AfterContentChecked {
 
     if (searchFieldConfiguration) {
       this.searhFilters = searchFieldConfiguration
-        .filter((config) => config.filter)
+        .filter((config) => config.filter?.filter)
         .map(
           (config) =>
             new DynamicFilter(
