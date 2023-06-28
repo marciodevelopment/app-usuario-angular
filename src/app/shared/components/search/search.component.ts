@@ -47,6 +47,7 @@ export class SearchComponent implements OnInit, AfterContentChecked {
   public totalItens = 0;
   public pagination!: TablePagination;
   public filters: Array<DynamicFilter> = [];
+  public showNewButton = false;
 
   constructor(private ref: ChangeDetectorRef, private router: Router) {}
 
@@ -57,6 +58,7 @@ export class SearchComponent implements OnInit, AfterContentChecked {
   ngOnInit(): void {
     const searchFieldConfiguration =
       this.searchConfiguration.searchFieldConfiguration;
+    this.showNewButton = this.showButtons.includes(TableButtomType.NEW);
 
     if (searchFieldConfiguration) {
       this.searhFilters = searchFieldConfiguration

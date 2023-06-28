@@ -19,6 +19,7 @@ export class UsuarioPesquisaComponent extends BaseSearchComponent<UsuarioPesquis
     super(usuarioService, 'Usuário', [
       TableButtomType.DELETE,
       TableButtomType.EDIT,
+      TableButtomType.NEW,
     ]);
   }
 

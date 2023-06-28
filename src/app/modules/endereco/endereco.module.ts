@@ -18,6 +18,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 
 import {
   DialogService,
+  DynamicDialogConfig,
   DynamicDialogModule,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
@@ -38,7 +39,7 @@ import {
     DynamicDialogModule,
     InputNumberModule,
   ],
-  providers: [DialogService, DynamicDialogRef, DynamicDialogRef],
+  providers: [DialogService, DynamicDialogRef, DynamicDialogConfig],
   exports: [CidadePesquisaFormComponent],
 })
 export class EnderecoModule {}

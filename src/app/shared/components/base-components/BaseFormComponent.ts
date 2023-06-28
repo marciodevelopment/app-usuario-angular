@@ -44,6 +44,7 @@ export abstract class BaseFormComponent<
   }
 
   onClickSubmit() {
+    console.log('saving');
     this.isSaving = true;
     this.executeSave().subscribe({
       next: () => {

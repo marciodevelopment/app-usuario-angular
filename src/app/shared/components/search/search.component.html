@@ -13,4 +13,4 @@
   [totalItens]="totalItens"
   [showButtons]="showButtons"
 ></app-dynamic-table>
-<app-buttons-bar (clickNew)="onClickNew()" />
+<app-buttons-bar (clickNew)="onClickNew()" *ngIf="showNewButton" />

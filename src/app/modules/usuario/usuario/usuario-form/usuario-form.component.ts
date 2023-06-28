@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BaseFormComponent } from 'src/app/shared/components/base-components/BaseFormComponent';
+
 import { UsuarioService } from '../../services/usuario.service';
 
 import { UsuarioAtualizacaoRequest } from '../../interfaces/request/UsuarioAtualizacaoRequest';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { UsuarioNovoRequest } from '../../interfaces/request/UsuarioNovoRequest';
-
 import { UsuarioResponse } from '../../interfaces/response/UsuarioResponse';
-import { BaseFormComponent } from 'src/app/shared/components/base-components/BaseFormComponent';
-import { SexoType } from '../../types/SexoType';
+
 import { EnumUtil } from '../../../../shared/utils/EnumUtil';
+import { SexoType } from '../../types/SexoType';
 
 @Component({
   selector: 'app-usuario-form',

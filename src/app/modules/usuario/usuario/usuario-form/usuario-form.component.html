@@ -68,13 +68,12 @@
         dateFormat="dd/mm/yy"
       />
     </div>
+    <div class="card flex flex-column md:flex-column gap-3">
+      <app-buttons-bar
+        [showSaveSubmit]="true"
+        [disabledSave]="!usuarioForm.valid"
+        (clickBack)="clickBack()"
+      />
+    </div>
   </form>
-
-  <div class="card flex flex-column md:flex-column gap-3">
-    <app-buttons-bar
-      [showSaveSubmit]="true"
-      [disabledSave]="!usuarioForm.valid"
-      (clickBack)="clickBack()"
-    />
-  </div>
 </p-card>
